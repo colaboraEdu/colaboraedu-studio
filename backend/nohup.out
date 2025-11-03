@@ -1,0 +1,165 @@
+INFO:     Started server process [2280933]
+INFO:     Waiting for application startup.
+🚀 Starting colaboraEDU API...
+2025-10-24 14:31:55,009 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2025-10-24 14:31:55,009 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("institutions")
+2025-10-24 14:31:55,009 INFO sqlalchemy.engine.Engine [raw sql] ()
+2025-10-24 14:31:55,010 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2025-10-24 14:31:55,010 INFO sqlalchemy.engine.Engine [raw sql] ()
+2025-10-24 14:31:55,011 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("students")
+2025-10-24 14:31:55,011 INFO sqlalchemy.engine.Engine [raw sql] ()
+2025-10-24 14:31:55,011 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("grades")
+2025-10-24 14:31:55,011 INFO sqlalchemy.engine.Engine [raw sql] ()
+2025-10-24 14:31:55,011 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("occurrences")
+2025-10-24 14:31:55,011 INFO sqlalchemy.engine.Engine [raw sql] ()
+2025-10-24 14:31:55,012 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("messages")
+2025-10-24 14:31:55,012 INFO sqlalchemy.engine.Engine [raw sql] ()
+2025-10-24 14:31:55,012 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("attendance")
+2025-10-24 14:31:55,012 INFO sqlalchemy.engine.Engine [raw sql] ()
+2025-10-24 14:31:55,013 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8004 (Press CTRL+C to quit)
+📊 Database tables created/verified
+INFO:     127.0.0.1:60444 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50718 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50730 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47440 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43270 - "GET / HTTP/1.1" 200 OK
+2025-10-24 14:34:51,872 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2025-10-24 14:34:51,879 INFO sqlalchemy.engine.Engine SELECT users.institution_id AS users_institution_id, users.email AS users_email, users.password_hash AS users_password_hash, users.first_name AS users_first_name, users.last_name AS users_last_name, users.role AS users_role, users.status AS users_status, users.last_login AS users_last_login, users.fcm_token AS users_fcm_token, users.id AS users_id, users.created_at AS users_created_at, users.updated_at AS users_updated_at, users.deleted_at AS users_deleted_at 
+FROM users 
+WHERE users.email = ? AND users.deleted_at IS NULL
+ LIMIT ? OFFSET ?
+2025-10-24 14:34:51,879 INFO sqlalchemy.engine.Engine [generated in 0.00039s] ('admin@colaboraedu.com', 1, 0)
+2025-10-24 14:34:51,880 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:36958 - "POST /api/v1/auth/login HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/app/api/v1/endpoints/auth.py", line 49, in login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: Incorrect email or password
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 63, in wrapped_app
+    await response(scope, receive, sender)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'dict' object is not callable
+INFO:     127.0.0.1:49904 - "GET / HTTP/1.1" 200 OK
+2025-10-24 15:38:14,295 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2025-10-24 15:38:14,295 INFO sqlalchemy.engine.Engine SELECT users.institution_id AS users_institution_id, users.email AS users_email, users.password_hash AS users_password_hash, users.first_name AS users_first_name, users.last_name AS users_last_name, users.role AS users_role, users.status AS users_status, users.last_login AS users_last_login, users.fcm_token AS users_fcm_token, users.id AS users_id, users.created_at AS users_created_at, users.updated_at AS users_updated_at, users.deleted_at AS users_deleted_at 
+FROM users 
+WHERE users.email = ? AND users.deleted_at IS NULL
+ LIMIT ? OFFSET ?
+2025-10-24 15:38:14,296 INFO sqlalchemy.engine.Engine [cached since 3802s ago] ('admin@colaboraedu.com', 1, 0)
+2025-10-24 15:38:14,297 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:33808 - "POST /api/v1/auth/login HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/app/api/v1/endpoints/auth.py", line 49, in login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: Incorrect email or password
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/suporte/coloboraGoogleStudio/colaboraEDUstudio1/backend/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 63, in wrapped_app
+    await response(scope, receive, sender)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'dict' object is not callable
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2280933]
+🛑 Shutting down colaboraEDU API...

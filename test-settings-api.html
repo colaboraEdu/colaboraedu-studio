@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste API Configurações</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px 15px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 3px; white-space: pre-wrap; }
+        .error { background: #f8d7da; color: #721c24; }
+        .success { background: #d4edda; color: #155724; }
+        input, select { padding: 8px; margin: 5px; border: 1px solid #ddd; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Teste API de Configurações</h1>
+        
+        <div class="section">
+            <h3>1. Login</h3>
+            <input type="email" id="email" placeholder="Email" value="admin@colaboraedu.com">
+            <input type="password" id="password" placeholder="Senha" value="admin123">
+            <button onclick="login()">Login</button>
+            <div id="loginResult" class="result"></div>
+        </div>
+
+        <div class="section">
+            <h3>2. Buscar Configurações</h3>
+            <button onclick="getSettings()">Buscar Configurações</button>
+            <div id="getResult" class="result"></div>
+        </div>
+
+        <div class="section">
+            <h3>3. Atualizar Configurações Gerais</h3>
+            <input type="text" id="platformName" placeholder="Nome da Plataforma" value="colaboraEDU Teste">
+            <input type="email" id="platformEmail" placeholder="Email da Plataforma" value="teste@colaboraedu.com">
+            <select id="timezone">
+                <option value="America/Sao_Paulo">Brasília (GMT-3)</option>
+                <option value="America/New_York">Nova York (GMT-5)</option>
+            </select>
+            <select id="language">
+                <option value="pt-BR">Português (Brasil)</option>
+                <option value="en-US">English (US)</option>
+            </select>
+            <select id="dateFormat">
+                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+            </select>
+            <button onclick="updateGeneral()">Atualizar Configurações Gerais</button>
+            <div id="updateResult" class="result"></div>
+        </div>
+
+        <div class="section">
+            <h3>Status do Token</h3>
+            <button onclick="checkToken()">Verificar Token</button>
+            <div id="tokenResult" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://192.168.10.178:8004/api/v1';
+        let authToken = localStorage.getItem('auth_token');
+
+        function log(elementId, message, isError = false) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `result ${isError ? 'error' : 'success'}`;
+        }
+
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `username=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    authToken = data.access_token;
+                    localStorage.setItem('auth_token', authToken);
+                    log('loginResult', `Login realizado com sucesso!\nToken: ${authToken.substring(0, 20)}...`);
+                } else {
+                    log('loginResult', `Erro no login: ${data.detail || 'Erro desconhecido'}`, true);
+                }
+            } catch (error) {
+                log('loginResult', `Erro de rede: ${error.message}`, true);
+            }
+        }
+
+        async function getSettings() {
+            if (!authToken) {
+                log('getResult', 'Faça login primeiro!', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/settings/`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    log('getResult', `Configurações carregadas:\n${JSON.stringify(data, null, 2)}`);
+                } else {
+                    log('getResult', `Erro ao buscar configurações: ${data.detail || 'Erro desconhecido'}`, true);
+                }
+            } catch (error) {
+                log('getResult', `Erro de rede: ${error.message}`, true);
+            }
+        }
+
+        async function updateGeneral() {
+            if (!authToken) {
+                log('updateResult', 'Faça login primeiro!', true);
+                return;
+            }
+
+            const data = {
+                platform_name: document.getElementById('platformName').value,
+                platform_email: document.getElementById('platformEmail').value,
+                timezone: document.getElementById('timezone').value,
+                language: document.getElementById('language').value,
+                date_format: document.getElementById('dateFormat').value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/settings/general`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    log('updateResult', `Configurações atualizadas com sucesso!\n${JSON.stringify(result, null, 2)}`);
+                } else {
+                    log('updateResult', `Erro ao atualizar: ${result.detail || 'Erro desconhecido'}`, true);
+                }
+            } catch (error) {
+                log('updateResult', `Erro de rede: ${error.message}`, true);
+            }
+        }
+
+        function checkToken() {
+            const token = localStorage.getItem('auth_token');
+            if (token) {
+                log('tokenResult', `Token encontrado: ${token.substring(0, 50)}...`);
+            } else {
+                log('tokenResult', 'Nenhum token encontrado no localStorage', true);
+            }
+        }
+
+        // Verificar token ao carregar a página
+        window.onload = function() {
+            checkToken();
+        };
+    </script>
+</body>
+</html>

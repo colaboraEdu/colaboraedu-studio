@@ -1,0 +1,5 @@
+{
+  "name": "colaboraEDU Login",
+  "description": "A modern login interface for the colaboraEDU platform, allowing different user profiles like administrators, teachers, and students to access their specific dashboards.",
+  "requestFramePermissions": []
+}
