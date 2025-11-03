@@ -261,6 +261,20 @@ from app.api.v1.ws.chat import chat_endpoint
 
 app.websocket("/ws/chat")(chat_endpoint)
 
+# PDF Processing router
+from app.api.v1.endpoints import pdf_processing
+
+app.include_router(
+    pdf_processing.router,
+    prefix="/api/v1/pdf",
+    tags=["pdf_processing"],
+    responses={
+        401: {"description": "Unauthorized"},
+        403: {"description": "Forbidden"},
+        404: {"description": "Not found"},
+    }
+)
+
 
 
 

@@ -58,6 +58,10 @@ class Settings(BaseSettings):
     smtp_username: str = ""
     smtp_password: str = ""
     
+    # AI/ML APIs
+    gemini_api_key: Optional[str] = None  # Google Gemini AI for PDF extraction
+    openai_api_key: Optional[str] = None  # OpenAI (alternative)
+    
     # Multi-tenancy
     default_institution_id: Optional[str] = None
     
